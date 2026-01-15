@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product; 
+use App\Models\Product;
 
 class ProductController extends Controller
 {
     public function index()
     {
         $products = Product::all();
-        return view('welcome', ['products' => $products]);
+        return view('products', ['products' => $products]);
     }
 
     public function filter($category)
     {
         $products = Product::where('category', $category)->get();
         
-        return view('welcome', [
+        return view('products', [
             'products' => $products,
             'currentCategory' => $category
         ]);
