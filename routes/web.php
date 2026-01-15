@@ -1,18 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController; 
 
-// Home Page
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [ProductController::class, 'index'])->name('home');
 
-// About Page
+
+Route::get('/category/{cat}', [ProductController::class, 'filter'])->name('shop.filter');
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-// Contact Page
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');

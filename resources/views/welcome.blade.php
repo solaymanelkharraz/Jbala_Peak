@@ -63,7 +63,7 @@
         header.scrolled {
             background: rgba(20, 54, 40, 0.95);
             backdrop-filter: blur(10px);
-            padding: 8px 5%; /* Reduced padding significantly */
+            padding: 8px 5%;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
@@ -76,7 +76,7 @@
 
         /* --- FIX: SMALLER LOGO ON SCROLL --- */
         header.scrolled .brand img {
-            height: 50px; /* Logo shrinks to fit slim header */
+            height: 50px;
         }
 
         nav ul {
@@ -148,47 +148,31 @@
         }
 
         .slide:nth-child(1) {
-            background-image: url('art.jfif');
+            background-image: url('{{ asset("art.jfif") }}');
             animation-delay: 0s;
         }
 
         .slide:nth-child(2) {
-            background-image: url('chefchaouen-tours.jpg');
+            background-image: url('{{ asset("chefchaouen-tours.jpg") }}');
             animation-delay: 6s;
         }
 
         .slide:nth-child(3) {
-            background-image: url('honey.jfif');
+            background-image: url('{{ asset("honey.jfif") }}');
             animation-delay: 12s;
         }
 
         .slide:nth-child(4) {
-            background-image: url('pro.jpeg');
+            background-image: url('{{ asset("pro.jpeg") }}');
             animation-delay: 18s;
         }
 
         @keyframes cinematicZoom {
-            0% {
-                opacity: 0;
-                transform: scale(1.1);
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            33% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            43% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 0;
-            }
+            0% { opacity: 0; transform: scale(1.1); }
+            10% { opacity: 1; }
+            33% { opacity: 1; transform: scale(1); }
+            43% { opacity: 0; }
+            100% { opacity: 0; }
         }
 
         .overlay {
@@ -315,13 +299,8 @@
         }
 
         @keyframes scrollText {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* PRODUCT CARDS (BIG GRID) */
@@ -351,7 +330,6 @@
         .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            /* Responsive Grid */
             gap: 40px;
         }
 
@@ -373,7 +351,6 @@
 
         .product-image-box {
             height: 350px;
-            /* Tall, Big Images */
             overflow: hidden;
             position: relative;
         }
@@ -402,6 +379,12 @@
             margin-bottom: 10px;
             display: block;
             font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .category-tag:hover {
+            color: var(--accent-gold);
         }
 
         .product-title {
@@ -446,7 +429,7 @@
         }
 
         .featured-img {
-            background-image: url('jbal.avif');
+            background-image: url('{{ asset("jbal.avif") }}');
             background-size: cover;
             background-position: center;
             min-height: 600px;
@@ -539,7 +522,7 @@
         }
 
         .newsletter {
-            background-image: url('honey.jfif');
+            background-image: url('{{ asset("honey.jfif") }}');
             background-size: cover;
             background-position: center;
             padding: 100px 8%;
@@ -609,15 +592,8 @@
         }
 
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -626,13 +602,13 @@
 
     <header id="navbar">
         <div class="brand">
-            <a href="{{ url('/') }}"><img src="logo.png" alt="Jbala Peak"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('logo.png') }}" alt="Jbala Peak"></a>
         </div>
         <nav>
             <ul>
                 <li><a href="{{ url('/') }}">Home</a></li>
                 <li><a href="{{ url('/about') }}">Our Story</a></li>
-                <li><a href="{{ url('/products') }}">Collection</a></li>
+                <li><a href="{{ url('/') }}">Collection</a></li>
                 <li><a href="{{ url('/contact') }}">Contact</a></li>
             </ul>
         </nav>
@@ -649,20 +625,13 @@
 
         <div class="hero-content">
             <h1><span>Authentic</span> Northern Heritage</h1>
-            <p>Handcrafted Clay Pottery, Traditional Djellabas, and Organic Mountain Honey. Direct from the Rif
-                Mountains to your home.</p>
-            <a href="about.html" class="btn-hero">Discover Our Roots</a>
+            <p>Handcrafted Clay Pottery, Traditional Djellabas, and Organic Mountain Honey. Direct from the Rif Mountains to your home.</p>
+            <a href="{{ url('/about') }}" class="btn-hero">Discover Our Roots</a>
         </div>
     </section>
 
     <div class="marquee-wrapper">
         <div class="marquee-content">
-            <span class="marquee-item"><i class="fa-solid fa-mug-hot"></i> POTTERY</span>
-            <span class="marquee-item"><i class="fa-solid fa-user-hooded"></i> DJELLABAS</span>
-            <span class="marquee-item"><i class="fa-solid fa-jar"></i> ORGANIC HONEY</span>
-            <span class="marquee-item"><i class="fa-solid fa-droplet"></i> OLIVE OIL</span>
-            <span class="marquee-item"><i class="fa-solid fa-gem"></i> HANDMADE</span>
-            <span class="marquee-item"><i class="fa-solid fa-leaf"></i> 100% NATURAL</span>
             <span class="marquee-item"><i class="fa-solid fa-mug-hot"></i> POTTERY</span>
             <span class="marquee-item"><i class="fa-solid fa-user-hooded"></i> DJELLABAS</span>
             <span class="marquee-item"><i class="fa-solid fa-jar"></i> ORGANIC HONEY</span>
@@ -675,87 +644,37 @@
     <section id="products" class="section">
         <div class="section-header">
             <h2>Our Collection</h2>
+            
+            @if(isset($currentCategory))
+                <p style="color: var(--accent-gold); font-weight: 600; text-transform: uppercase; margin-top:10px;">
+                    Filtering by: {{ $currentCategory }} 
+                    <a href="{{ url('/') }}" style="color: var(--text-dark); font-size: 0.8rem; margin-left: 10px;">(Show All)</a>
+                </p>
+            @endif
+
             <div class="divider"></div>
             <p style="margin-top: 20px;">Curated items that bring the essence of the Rif into your life.</p>
         </div>
 
         <div class="cards-container">
+            
+            @foreach($products as $product)
             <div class="product-card">
                 <div class="product-image-box">
-                    <img src="tagine.jfif"
-                        alt="Tagine">
+                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
                 </div>
                 <div class="product-details">
-                    <span class="category-tag">Pottery</span>
-                    <h3 class="product-title">Chefchaouen Tagine</h3>
-                    <span class="product-price">250 MAD</span>
+                    <a href="{{ route('shop.filter', $product->category) }}" class="category-tag">
+                        {{ $product->category }}
+                    </a>
+                    
+                    <h3 class="product-title">{{ $product->name }}</h3>
+                    <span class="product-price">{{ $product->price }} MAD</span>
                     <a href="#" class="btn-add-cart">Add to Cart</a>
                 </div>
             </div>
-
-            <div class="product-card">
-                <div class="product-image-box">
-                    <img src="jbal.avif" alt="Djellaba">
-                </div>
-                <div class="product-details">
-                    <span class="category-tag">Clothing</span>
-                    <h3 class="product-title">Winter Rif Djellaba</h3>
-                    <span class="product-price">850 MAD</span>
-                    <a href="#" class="btn-add-cart">Add to Cart</a>
-                </div>
+            @endforeach
             </div>
-
-            <div class="product-card">
-                <div class="product-image-box">
-                    <img src="honey.jfif" alt="Honey">
-                </div>
-                <div class="product-details">
-                    <span class="category-tag">Organic Food</span>
-                    <h3 class="product-title">Pure Mountain Honey</h3>
-                    <span class="product-price">180 MAD</span>
-                    <a href="#" class="btn-add-cart">Add to Cart</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-box">
-                    <img src="oil.jpg"
-                        alt="Olive Oil">
-                </div>
-                <div class="product-details">
-                    <span class="category-tag">Organic Food</span>
-                    <h3 class="product-title">Cold Pressed Olive Oil</h3>
-                    <span class="product-price">120 MAD</span>
-                    <a href="#" class="btn-add-cart">Add to Cart</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-box">
-                    <img src="cup.jfif"
-                        alt="Clay Cup">
-                </div>
-                <div class="product-details">
-                    <span class="category-tag">Pottery</span>
-                    <h3 class="product-title">Artisan Water Cup</h3>
-                    <span class="product-price">50 MAD</span>
-                    <a href="#" class="btn-add-cart">Add to Cart</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-box">
-                    <img src="argan.jfif"
-                        alt="Argan Oil">
-                </div>
-                <div class="product-details">
-                    <span class="category-tag">Beauty</span>
-                    <h3 class="product-title">Cosmetic Argan Oil</h3>
-                    <span class="product-price">300 MAD</span>
-                    <a href="#" class="btn-add-cart">Add to Cart</a>
-                </div>
-            </div>
-        </div>
     </section>
 
     <section class="featured-section">
@@ -763,8 +682,7 @@
         <div class="featured-content">
             <span class="tag">Editor's Pick</span>
             <h2>The Royal <br> Rif Djellaba</h2>
-            <p>Experience the warmth and dignity of the traditional Northern wool Djellaba. Woven by hand in
-                Chefchaouen, this garment is perfect for winter nights and cultural gatherings.</p>
+            <p>Experience the warmth and dignity of the traditional Northern wool Djellaba. Woven by hand in Chefchaouen, this garment is perfect for winter nights and cultural gatherings.</p>
             <a href="#" class="btn-dark">Shop This Look</a>
         </div>
     </section>
@@ -777,20 +695,17 @@
         <div class="review-grid">
             <div class="review-card">
                 <i class="fa-solid fa-quote-left"></i>
-                <p class="review-text">"I ordered the Tagine set and it arrived safely in Paris. The quality is
-                    unmatched, truly a piece of art."</p>
+                <p class="review-text">"I ordered the Tagine set and it arrived safely in Paris. The quality is unmatched, truly a piece of art."</p>
                 <p class="review-author">- Sarah M.</p>
             </div>
             <div class="review-card">
                 <i class="fa-solid fa-quote-left"></i>
-                <p class="review-text">"The honey tastes exactly like what I remember from my childhood in the
-                    mountains. Highly recommended!"</p>
+                <p class="review-text">"The honey tastes exactly like what I remember from my childhood in the mountains. Highly recommended!"</p>
                 <p class="review-author">- Ahmed K.</p>
             </div>
             <div class="review-card">
                 <i class="fa-solid fa-quote-left"></i>
-                <p class="review-text">"Professional service and the Djellaba fits perfectly. Jbala Peak is the real
-                    deal."</p>
+                <p class="review-text">"Professional service and the Djellaba fits perfectly. Jbala Peak is the real deal."</p>
                 <p class="review-author">- John D.</p>
             </div>
         </div>
