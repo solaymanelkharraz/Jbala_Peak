@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
-    $products = \App\Models\Product::take(3)->get();
+    $products = \App\Models\Product::take(6)->get();
     return view('welcome', ['products' => $products]);
 })->name('home');
 
