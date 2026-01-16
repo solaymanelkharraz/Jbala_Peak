@@ -251,7 +251,7 @@
             </div>
             <div class="contact-item">
                 <i class="fa-solid fa-location-dot"></i>
-                <span>Chefchaouen, Morocco</span>
+                <span>Tanger, Morocco</span>
             </div>
         </div>
 
