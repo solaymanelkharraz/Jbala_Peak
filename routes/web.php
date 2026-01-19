@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RproductController;
 
 Route::get('/', function () {
     $products = \App\Models\Product::take(6)->get();
@@ -14,3 +15,4 @@ Route::get('/category/{cat}', [ProductController::class, 'filter'])->name('shop.
 
 Route::get('/about', function () { return view('about'); });
 Route::get('/contact', function () { return view('contact'); });
+Route::resource('produits', RproductController::class);
