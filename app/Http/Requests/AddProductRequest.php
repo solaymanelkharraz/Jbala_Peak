@@ -17,6 +17,7 @@ class AddProductRequest extends FormRequest
             'nom' => 'required|min:5',
             'prix' => 'required|numeric',
             'categorie' => 'required|min:3',
+            'description' => 'nullable|string',
             'image' => 'required|image|max:2048' // Max 2MB
         ];
     }

@@ -18,9 +18,7 @@ class RproductController extends Controller
     // Save the Product
     public function store(AddProductRequest $request)
     {
-        // 1. Validation is already done by AddProductRequest
 
-        // 2. Setup Cloudinary Manually (As per teacher's PDF)
         $cloudinary = new Cloudinary([
             'cloud' => [
                 'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
@@ -29,26 +27,75 @@ class RproductController extends Controller
             ],
         ]);
 
-        // 3. Upload the image to Cloudinary
         $uploadedFile = $cloudinary->uploadApi()->upload(
             $request->file('image')->getRealPath(),
-            ['folder' => 'jbala_products'] // Optional: folder name in Cloudinary
+            ['folder' => 'jbala_products'] 
         );
 
-        // 4. Get the Secure URL (https://...)
         $imageUrl = $uploadedFile['secure_url'];
 
-        // 5. Save to Database
         Product::create([
-            'name' => $request->nom,       // Input name="nom"
-            'price' => $request->prix,     // Input name="prix"
-            'category' => $request->categorie, // Input name="categorie"
-            'description' => $request->description, // <--- ADD THIS
-            'image' => $imageUrl           // Save the Cloudinary Link!
+            'name' => $request->nom,       
+            'price' => $request->prix,     
+            'category' => $request->categorie,
+            'description' => $request->description, 
+            'image' => $imageUrl        
             
         ]);
 
-        // 6. Redirect with Success Message
         return redirect()->back()->with('success', 'Product added successfully to Jbala Peak!');
+    }
+    // 1. DASHBOARD: Shows the list of all products
+    public function index()
+    {
+        // Get all products, 10 per page
+        $products = Product::paginate(10); 
+        return view('admin.products.index', compact('products'));
+    }
+
+    // 2. EDIT FORM: Shows the form pre-filled with existing data
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('admin.products.edit', compact('product'));
+    }
+
+    // 3. UPDATE: Saves the changes to the database
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        // Update basic info
+        $product->name = $request->nom;
+        $product->price = $request->prix;
+        $product->category = $request->categorie;
+        $product->description = $request->description;
+
+        // Update Image (Only if a new one is uploaded)
+        if ($request->hasFile('image')) {
+            // Cloudinary Setup
+            $cloudinary = new \Cloudinary\Cloudinary([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key'    => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ],
+            ]);
+            
+            // Upload & Get new URL
+            $uploadedFile = $cloudinary->uploadApi()->upload($request->file('image')->getRealPath(), ['folder' => 'jbala_products']);
+            $product->image = $uploadedFile['secure_url'];
+        }
+
+        $product->save(); // Save changes
+        return redirect()->route('produits.index')->with('success', 'Product updated successfully!');
+    }
+
+    // 4. DESTROY: Deletes the product
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->back()->with('success', 'Product deleted successfully!');
     }
 }

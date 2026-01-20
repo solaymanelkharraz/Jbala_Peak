@@ -268,12 +268,12 @@
                 <li><a href="{{ url('/about') }}">Our Story</a></li>
                 <li><a href="{{ url('/products') }}" style="color: var(--accent-gold);">Collection</a></li>
                 <li><a href="{{ url('/contact') }}">Contact</a></li>
-                <li>
-                    <a href="{{ route('produits.create') }}"
-                        style="border: 1px solid var(--accent-gold); padding: 8px 20px; border-radius: 20px; color: var(--accent-gold);">
-                        + Add Product
-                    </a>
-                </li>
+    <li>
+        <a href="{{ route('produits.index') }}" 
+           style="background-color: var(--jbala-green); color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--accent-gold);">
+           <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+    </li>
             </ul>
         </nav>
     </header>
