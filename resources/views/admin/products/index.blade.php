@@ -76,8 +76,14 @@
         </tbody>
     </table>
 
-    <div class="d-flex justify-content-center mt-4">
-        {{ $products->links() }}
+    <div style="margin-top: 40px; display: flex; justify-content: center;">
+        {{ $products->links('vendor.pagination.custom') }}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url('/') }}" class="text-secondary text-decoration-none">
+            <i class="fas fa-arrow-left"></i> Return to Jbala Shop
+        </a>
     </div>
 </div>
 
