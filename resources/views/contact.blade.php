@@ -227,12 +227,18 @@
                 <li><a href="{{ url('/about') }}">Our Story</a></li>
                 <li><a href="{{ url('/products') }}">Collection</a></li>
                 <li><a href="{{ url('/contact') }}" style="color: var(--accent-gold);">Contact</a></li>
-    <li>
-        <a href="{{ route('produits.index') }}" 
-           style="background-color: var(--jbala-green); color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--accent-gold);">
-           <i class="fas fa-tachometer-alt"></i> Dashboard
-        </a>
-    </li>
+                <li>
+                    <a href="{{ route('produits.index') }}"
+                        style="background-color: var(--jbala-green); color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--accent-gold);">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="https://jbala-react-client.vercel.app" target="_blank"
+                        style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
+                        API Client (React)
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
