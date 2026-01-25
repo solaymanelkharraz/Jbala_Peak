@@ -631,61 +631,69 @@
             <a href="{{ url('/') }}"><img src="logo.png" alt="Jbala Peak"></a>
         </div>
         <nav>
-            <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/about') }}">Our Story</a></li>
-                <li><a href="{{ url('/products') }}">Collection</a></li>
-                <li><a href="{{ url('/contact') }}">Contact</a></li>
+<ul>
+    <li><a href="{{ url('/') }}">Home</a></li>
+    <li><a href="{{ url('/about') }}">Our Story</a></li>
+    <li><a href="{{ url('/products') }}">Collection</a></li>
+    <li><a href="{{ url('/contact') }}">Contact</a></li>
 
-                <li>
-                    <a href="https://jbala-react-client.vercel.app" target="_blank"
-                        style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
-                        API Client (React)
-                    </a>
-                </li>
+    <li>
+        <a href="https://jbala-react-client.vercel.app" target="_blank"
+           style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
+            API Client
+        </a>
+    </li>
 
-                @guest
-                    {{-- CASE A: NOT LOGGED IN (Show Login/Register) --}}
-                    <li>
-                        <a href="{{ route('login') }}" style="margin-left: 10px;">Login</a>
-                    </li>
-                    @if (Route::has('register'))
-                        <li>
-                            <a href="{{ route('register') }}"
-                                style="background-color: var(--accent-gold); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
-                                Register
-                            </a>
-                        </li>
-                    @endif
+    @guest
+        {{-- CASE A: NOT LOGGED IN --}}
+        @if (Route::has('login'))
+            <li><a href="{{ route('login') }}" style="margin-left: 10px;">Login</a></li>
+        @endif
 
-                @else
-                    {{-- CASE B: LOGGED IN --}}
+        @if (Route::has('register'))
+            <li>
+                <a href="{{ route('register') }}"
+                   style="background-color: var(--accent-gold); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
+                   Register
+                </a>
+            </li>
+        @endif
 
-                    {{-- Show Dashboard ONLY if ADMIN --}}
-                    @if(Auth::user()->role === 'ADMIN')
-                        <li>
-                            <a href="{{ route('produits.index') }}"
-                                style="background-color: var(--jbala-green); color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--accent-gold);">
-                                <i class="fas fa-tachometer-alt"></i> Dashboard
-                            </a>
-                        </li>
-                    @endif
+    @else
+        {{-- CASE B: LOGGED IN --}}
 
-                    {{-- Logout Button (Shows User Name) --}}
-                    <li>
-                        <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                            style="color: var(--jbala-green); font-weight: bold; margin-left: 10px;">
-                            <i class="fas fa-sign-out-alt"></i> Logout ({{ Auth::user()->name }})
-                        </a>
+        {{-- 1. ADMIN BUTTON --}}
+        @if(Auth::user()->role === 'ADMIN')
+            <li>
+                <a href="{{ route('produits.index') }}"
+                   style="background-color: white; color: var(--jbala-green); padding: 8px 20px; border-radius: 20px; font-weight: bold;">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </li>
 
-                        {{-- Hidden Form Required for Security --}}
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                @endguest
-            </ul>
+        {{-- 2. CLIENT BUTTON (My Space) --}}
+        @else
+            <li>
+                <a href="{{ route('home') }}"
+                   style="border: 1px solid #fff; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold;">
+                    <i class="fas fa-user-circle"></i> My Space
+                </a>
+            </li>
+        @endif
+
+        {{-- 3. LOGOUT BUTTON --}}
+        <li>
+            <a href="{{ route('logout') }}"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Logout
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </li>
+    @endguest
+</ul>
         </nav>
     </header>
 

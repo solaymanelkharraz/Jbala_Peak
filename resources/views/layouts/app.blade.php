@@ -54,11 +54,16 @@
         }
 
         .brand a {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
             display: block;
         }
-
+        
         .brand img {
-            height: 50px; /* Adjust size as needed */
+            height: 50px;
             cursor: pointer;
         }
 
@@ -84,7 +89,7 @@
         /* MAIN CONTENT FIX */
         main {
             padding: 50px 8%;
-            margin-top: 100px; /* Pushes content down so header doesn't hide it */
+            margin-top: 100px;
             min-height: 80vh;
         }
     </style>
@@ -103,9 +108,7 @@
             <nav>
                 <ul>
                     <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ url('/about') }}">Our Story</a></li>
                     <li><a href="{{ url('/products') }}">Collection</a></li>
-                    <li><a href="{{ url('/contact') }}">Contact</a></li>
 
                     <li>
                         <a href="https://jbala-react-client.vercel.app" target="_blank" 
@@ -115,6 +118,7 @@
                     </li>
 
                     @guest
+                        {{-- NOT LOGGED IN --}}
                         @if (Route::has('login'))
                             <li><a href="{{ route('login') }}" style="margin-left: 10px;">Login</a></li>
                         @endif
@@ -128,6 +132,9 @@
                             </li>
                         @endif
                     @else
+                        {{-- LOGGED IN --}}
+                        
+                        {{-- 1. ADMIN BUTTON --}}
                         @if(Auth::user()->role === 'ADMIN')
                             <li>
                                 <a href="{{ route('produits.index') }}" 
@@ -135,12 +142,22 @@
                                     <i class="fas fa-tachometer-alt"></i> Dashboard
                                 </a>
                             </li>
+                        
+                        {{-- 2. CLIENT BUTTON (My Space) --}}
+                        @else
+                            <li>
+                                <a href="{{ route('home') }}" 
+                                   style="border: 1px solid #fff; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold;">
+                                    <i class="fas fa-user-circle"></i> My Space
+                                </a>
+                            </li>
                         @endif
 
+                        {{-- 3. LOGOUT BUTTON (Clean) --}}
                         <li>
                             <a href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Logout ({{ Auth::user()->name }})
+                                Logout
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

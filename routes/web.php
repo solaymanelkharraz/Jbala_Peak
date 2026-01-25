@@ -5,25 +5,27 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RproductController;
 use Illuminate\Support\Facades\Auth;
 
-// --- PUBLIC ROUTES (Everyone can see these) ---
+// --- PUBLIC ROUTES ---
+
+// 1. CHANGE: I renamed this from 'home' to 'welcome'
 Route::get('/', function () {
     $products = \App\Models\Product::take(6)->get();
     return view('welcome', ['products' => $products]);
-})->name('home');
+})->name('welcome'); 
 
 Route::get('/products', [ProductController::class, 'index'])->name('shop.index');
 Route::get('/category/{cat}', [ProductController::class, 'filter'])->name('shop.filter');
 Route::get('/about', function () { return view('about'); });
 Route::get('/contact', function () { return view('contact'); });
 
+// --- ADMIN ROUTES ---
 Route::middleware(['auth', 'admin'])->group(function () {
-    
-    // This handles the Dashboard, Add, Edit, and Delete pages
     Route::resource('produits', RproductController::class);
-
 });
 
-// --- AUTHENTICATION ROUTES (Login, Register, Logout) ---
+// --- AUTHENTICATION ROUTES ---
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home_dashboard');
+// 2. CHANGE: I renamed this from 'home_dashboard' to 'home'
+// Now route('home') will correctly take you here!
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
