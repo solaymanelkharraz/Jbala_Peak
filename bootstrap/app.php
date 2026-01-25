@@ -8,18 +8,20 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
-        api: __DIR__ . '/../routes/api.php', 
+        api: __DIR__ . '/../routes/api.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // 1. Existing CSRF fix for API
-        $middleware->validateCsrfTokens(except: [
-            'api/*',
-        ]);
 
-        // 2. NEW: Register the 'admin' security guard
+        // Trust all proxies (Required for Vercel HTTPS to work)
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'api/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
