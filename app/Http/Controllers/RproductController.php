@@ -6,6 +6,8 @@ use App\Models\Product; // Make sure this matches your Model name!
 use Illuminate\Http\Request;
 use App\Http\Requests\AddProductRequest;
 use Cloudinary\Cloudinary;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 
 class RproductController extends Controller
 {
@@ -97,5 +99,26 @@ class RproductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
         return redirect()->back()->with('success', 'Product deleted successfully!');
+    }
+    public function email()
+    {
+        // IMPORTANT: We load 'contact' because that is the name of your view file
+        return view('contact'); 
+    }
+
+    // Process the Form
+    public function sendEmail(Request $request)
+    {
+        $data = [
+            'user_email' => $request->input('user_email'),
+            'subject'    => $request->input('subject'),
+            'message'    => $request->input('message'),
+        ];
+
+        // Send to ADMIN (You)
+        // Replace this email with yours if needed
+        Mail::to('soulaymanelkharraz2006@gmail.com')->send(new TestMail($data));
+
+        return back()->with('success', 'Message sent successfully!');
     }
 }

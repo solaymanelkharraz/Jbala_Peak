@@ -2,12 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\RproductController;
+use App\Http\Controllers\RproductController; // Make sure this is imported!
 use Illuminate\Support\Facades\Auth;
 
 // --- PUBLIC ROUTES ---
 
-// 1. CHANGE: I renamed this from 'home' to 'welcome'
 Route::get('/', function () {
     $products = \App\Models\Product::take(6)->get();
     return view('welcome', ['products' => $products]);
@@ -16,7 +15,12 @@ Route::get('/', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('shop.index');
 Route::get('/category/{cat}', [ProductController::class, 'filter'])->name('shop.filter');
 Route::get('/about', function () { return view('about'); });
-Route::get('/contact', function () { return view('contact'); });
+
+// --- CONTACT ROUTES (The Fix) ---
+// 1. DELETE the old "Route::get('/contact', function..." line.
+// 2. USE these two lines instead:
+Route::get('/contact', [RproductController::class, 'email'])->name('email.form');
+Route::post('/send/email', [RproductController::class, 'sendEmail'])->name('send.email');
 
 // --- ADMIN ROUTES ---
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -26,6 +30,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // --- AUTHENTICATION ROUTES ---
 Auth::routes();
 
-// 2. CHANGE: I renamed this from 'home_dashboard' to 'home'
-// Now route('home') will correctly take you here!
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

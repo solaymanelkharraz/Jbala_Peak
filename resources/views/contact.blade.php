@@ -94,7 +94,8 @@
         /* PAGE BANNER */
         .page-header {
             height: 60vh;
-            background-image: url('pro.jpeg');
+            /* Ensure you have this image or change the path */
+            background-image: url('{{ asset("img/chefchaouen-tours.jpg") }}'); 
             background-size: cover;
             background-position: center;
             display: flex;
@@ -219,73 +220,73 @@
 
     <header id="navbar">
         <div class="brand">
-            <a href="{{ url('/') }}">.<img src="logo.png" alt="Jbala Peak"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('logo.png') }}" alt="Jbala Peak"></a>
         </div>
-<nav>
-<ul>
-    <li><a href="{{ url('/') }}">Home</a></li>
-    <li><a href="{{ url('/about') }}">Our Story</a></li>
-    <li><a href="{{ url('/products') }}">Collection</a></li>
-    <li><a href="{{ url('/contact') }}">Contact</a></li>
+        <nav>
+            <ul>
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ url('/about') }}">Our Story</a></li>
+                <li><a href="{{ url('/products') }}">Collection</a></li>
+                <li><a href="{{ url('/contact') }}">Contact</a></li>
 
-    <li>
-        <a href="https://jbala-react-client.vercel.app" target="_blank"
-           style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
-            API Client
-        </a>
-    </li>
+                <li>
+                    <a href="https://jbala-react-client.vercel.app" target="_blank"
+                        style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
+                        API Client
+                    </a>
+                </li>
 
-    @guest
-        {{-- CASE A: NOT LOGGED IN --}}
-        @if (Route::has('login'))
-            <li><a href="{{ route('login') }}" style="margin-left: 10px;">Login</a></li>
-        @endif
+                @guest
+                {{-- CASE A: NOT LOGGED IN --}}
+                @if (Route::has('login'))
+                <li><a href="{{ route('login') }}" style="margin-left: 10px;">Login</a></li>
+                @endif
 
-        @if (Route::has('register'))
-            <li>
-                <a href="{{ route('register') }}"
-                   style="background-color: var(--accent-gold); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
-                   Register
-                </a>
-            </li>
-        @endif
+                @if (Route::has('register'))
+                <li>
+                    <a href="{{ route('register') }}"
+                        style="background-color: var(--accent-gold); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
+                        Register
+                    </a>
+                </li>
+                @endif
 
-    @else
-        {{-- CASE B: LOGGED IN --}}
+                @else
+                {{-- CASE B: LOGGED IN --}}
 
-        {{-- 1. ADMIN BUTTON --}}
-        @if(Auth::user()->role === 'ADMIN')
-            <li>
-                <a href="{{ route('produits.index') }}"
-                   style="background-color: white; color: var(--jbala-green); padding: 8px 20px; border-radius: 20px; font-weight: bold;">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
-                </a>
-            </li>
+                {{-- 1. ADMIN BUTTON --}}
+                @if(Auth::user()->role === 'ADMIN')
+                <li>
+                    <a href="{{ route('produits.index') }}"
+                        style="background-color: white; color: var(--jbala-green); padding: 8px 20px; border-radius: 20px; font-weight: bold;">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
 
-        {{-- 2. CLIENT BUTTON (My Space) --}}
-        @else
-            <li>
-                <a href="{{ route('home') }}"
-                   style="border: 1px solid #fff; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold;">
-                    <i class="fas fa-user-circle"></i> My Space
-                </a>
-            </li>
-        @endif
+                {{-- 2. CLIENT BUTTON (My Space) --}}
+                @else
+                <li>
+                    <a href="{{ route('home') }}"
+                        style="border: 1px solid #fff; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold;">
+                        <i class="fas fa-user-circle"></i> My Space
+                    </a>
+                </li>
+                @endif
 
-        {{-- 3. LOGOUT BUTTON --}}
-        <li>
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                Logout
-            </a>
+                {{-- 3. LOGOUT BUTTON --}}
+                <li>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-        </li>
-    @endguest
-</ul>
-</nav>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+                @endguest
+            </ul>
+        </nav>
     </header>
 
     <div class="page-header">
@@ -313,10 +314,19 @@
         </div>
 
         <div class="form-box">
-            <form>
-                <input type="text" placeholder="Your Name">
-                <input type="email" placeholder="Your Email">
-                <textarea rows="5" placeholder="How can we help?"></textarea>
+            @if(session('success'))
+                <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form action="{{ route('send.email') }}" method="POST">
+                @csrf <input type="text" name="subject" placeholder="Subject" required>
+                
+                <input type="email" name="user_email" placeholder="Your Email" required>
+                
+                <textarea name="message" rows="5" placeholder="How can we help?" required></textarea>
+                
                 <button type="submit" class="btn-submit">Send Message</button>
             </form>
         </div>
