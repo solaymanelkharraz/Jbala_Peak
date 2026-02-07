@@ -11,4 +11,8 @@ class Product extends Model
 
     // ADD THIS ARRAY:
     protected $fillable = ['name', 'price', 'category', 'description', 'image'];
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
