@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\URL; // <--- 1. Add this import
+use Illuminate\Support\Facades\URL; 
+use Illuminate\Http\Request; // <--- 1. Add this for the segment check
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,11 +19,16 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(Request $request): void // <--- 2. Add Request here
     {
-        // 2. Add this check
+        // HTTPS Check
         if($this->app->environment('production')) {
             URL::forceScheme('https');
         }
+
+        // 3. THE LANGUAGE FIX 
+        // This tells Laravel: "Use the first part of the URL (en, fr, or ar) 
+        // as the default value for the {lang} parameter in all routes."
+        URL::defaults(['lang' => $request->segment(1)]);
     }
 }

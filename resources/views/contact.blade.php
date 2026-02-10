@@ -221,6 +221,7 @@
     <header id="navbar">
         <div class="brand">
             <a href="{{ url('/') }}"><img src="{{ asset('logo.png') }}" alt="Jbala Peak"></a>
+
         </div>
 <nav>
     <ul>

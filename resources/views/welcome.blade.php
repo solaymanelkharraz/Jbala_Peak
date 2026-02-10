@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jbala Peak | Home</title>
+    <title>Jbala Peak | {{ __('messages.home') }}</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         /* --- VARIABLES --- */
         :root {
@@ -59,12 +58,10 @@
             transition: var(--transition);
         }
 
-        /* --- FIX: SLIMMER SCROLLED HEADER --- */
         header.scrolled {
             background: rgba(20, 54, 40, 0.95);
             backdrop-filter: blur(10px);
             padding: 8px 5%;
-            /* Reduced padding significantly */
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
@@ -75,16 +72,15 @@
             cursor: pointer;
         }
 
-        /* --- FIX: SMALLER LOGO ON SCROLL --- */
         header.scrolled .brand img {
             height: 50px;
-            /* Logo shrinks to fit slim header */
         }
 
         nav ul {
             display: flex;
             gap: 40px;
             list-style: none;
+            align-items: center;
         }
 
         nav a {
@@ -150,22 +146,22 @@
         }
 
         .slide:nth-child(1) {
-            background-image: url('art.jfif');
+            background-image: url('{{ asset('art.jfif') }}');
             animation-delay: 0s;
         }
 
         .slide:nth-child(2) {
-            background-image: url('chefchaouen-tours.jpg');
+            background-image: url('{{ asset('chefchaouen-tours.jpg') }}');
             animation-delay: 6s;
         }
 
         .slide:nth-child(3) {
-            background-image: url('honey.jfif');
+            background-image: url('{{ asset('honey.jfif') }}');
             animation-delay: 12s;
         }
 
         .slide:nth-child(4) {
-            background-image: url('pro.jpeg');
+            background-image: url('{{ asset('pro.jpeg') }}');
             animation-delay: 18s;
         }
 
@@ -283,7 +279,7 @@
             width: 100%;
         }
 
-        /* --- MOVING CATEGORIES (MARQUEE) --- */
+        /* MARQUEE */
         .marquee-wrapper {
             background-color: var(--jbala-green);
             padding: 20px 0;
@@ -310,12 +306,6 @@
             padding: 0 40px;
         }
 
-        .marquee-item i {
-            margin-right: 10px;
-            font-size: 0.8rem;
-            vertical-align: middle;
-        }
-
         @keyframes scrollText {
             0% {
                 transform: translateX(0);
@@ -326,7 +316,7 @@
             }
         }
 
-        /* PRODUCT CARDS (BIG GRID) */
+        /* PRODUCTS */
         .section {
             padding: 100px 8%;
             background: white;
@@ -353,7 +343,6 @@
         .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            /* Responsive Grid */
             gap: 40px;
         }
 
@@ -375,7 +364,6 @@
 
         .product-image-box {
             height: 350px;
-            /* Tall, Big Images */
             overflow: hidden;
             position: relative;
         }
@@ -404,6 +392,7 @@
             margin-bottom: 10px;
             display: block;
             font-weight: 600;
+            text-decoration: none;
         }
 
         .product-title {
@@ -439,7 +428,7 @@
             color: white;
         }
 
-        /* FEATURED SPLIT SECTION */
+        /* FEATURED */
         .featured-section {
             padding: 0;
             display: grid;
@@ -448,7 +437,7 @@
         }
 
         .featured-img {
-            background-image: url('jbal.avif');
+            background-image: url('{{ asset('jbal.avif') }}');
             background-size: cover;
             background-position: center;
             min-height: 600px;
@@ -500,7 +489,7 @@
             background: var(--accent-gold);
         }
 
-        /* TESTIMONIALS & NEWSLETTER */
+        /* TESTIMONIALS */
         .testimonials {
             background: white;
             padding: 100px 8%;
@@ -540,8 +529,9 @@
             font-family: 'Playfair Display', serif;
         }
 
+        /* NEWSLETTER */
         .newsletter {
-            background-image: url('honey.jfif');
+            background-image: url('{{ asset('honey.jfif') }}');
             background-size: cover;
             background-position: center;
             padding: 100px 8%;
@@ -610,6 +600,40 @@
             letter-spacing: 1px;
         }
 
+        /* Dropdown Container */
+        .dropdown-container:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Dropdown Menu [cite: 5-6] */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--jbala-green);
+            min-width: 140px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            border-radius: 10px;
+            top: 35px;
+            right: 0;
+        }
+
+        /* Dropdown Links [cite: 18-21] */
+        .dropdown-content a {
+            color: white !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-transform: capitalize !important;
+            font-size: 0.85rem !important;
+            letter-spacing: 1px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--accent-gold);
+            border-radius: 10px;
+        }
+
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -621,82 +645,99 @@
                 transform: translateY(0);
             }
         }
+
+        /* LANG SWITCHER */
+        .lang-switch {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-switch a {
+            padding: 5px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            font-size: 0.7rem !important;
+        }
     </style>
 </head>
 
 <body>
-
     <header id="navbar">
         <div class="brand">
-            <a href="{{ url('/') }}"><img src="logo.png" alt="Jbala Peak"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('logo.png') }}" alt="Jbala Peak"></a>
         </div>
-<nav>
-    <ul>
-        <li><a href="{{ url('/') }}">Home</a></li>
-        <li><a href="{{ url('/about') }}">Our Story</a></li>
-        <li><a href="{{ url('/products') }}">Collection</a></li>
-        <li><a href="{{ url('/contact') }}">Contact</a></li>
+        <nav>
+            <ul>
+                <li><a href="{{ url(app()->getLocale() . '/about') }}">{{ __('messages.our_story') }}</a></li>
+                <li><a href="{{ url(app()->getLocale() . '/products') }}">{{ __('messages.collection') }}</a></li>
+                <li><a href="{{ url(app()->getLocale() . '/contact') }}">{{ __('messages.contact') }}</a></li>
 
-        <li>
-            <a href="{{ route('cart') }}" style="position: relative;">
-                <i class="fa-solid fa-cart-shopping"></i> Panier
-                @if(session('cart') && count(session('cart')) > 0)
-                    <span style="background: var(--accent-gold); color: white; border-radius: 50%; padding: 2px 7px; font-size: 10px; position: absolute; top: -10px; right: -15px;">
-                        {{ count(session('cart')) }}
-                    </span>
-                @endif
-            </a>
-        </li>
-
-        <li>
-            <a href="https://jbala-react-client.vercel.app" target="_blank"
-                style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
-                API Client
-            </a>
-        </li>
-
-        @guest
-            @if (Route::has('login'))
-                <li><a href="{{ route('login') }}" style="margin-left: 10px;">Login</a></li>
-            @endif
-
-            @if (Route::has('register'))
                 <li>
-                    <a href="{{ route('register') }}"
-                        style="background-color: var(--accent-gold); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
-                        Register
+                    <a href="{{ route('cart', ['lang' => app()->getLocale()]) }}" style="position: relative;">
+                        <i class="fa-solid fa-cart-shopping"></i> {{ __('messages.panier') }}
+                        @if(session('cart') && count(session('cart')) > 0)
+                            <span
+                                style="background: var(--accent-gold); color: white; border-radius: 50%; padding: 2px 7px; font-size: 10px; position: absolute; top: -10px; right: -15px;">
+                                {{ count(session('cart')) }}
+                            </span>
+                        @endif
                     </a>
                 </li>
-            @endif
-        @else
-            @if(Auth::user()->role === 'ADMIN')
-                <li>
-                    <a href="{{ route('produits.index') }}"
-                        style="background-color: white; color: var(--jbala-green); padding: 8px 20px; border-radius: 20px; font-weight: bold;">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </a>
-                </li>
-            @else
-                <li>
-                    <a href="{{ route('home') }}"
-                        style="border: 1px solid #fff; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold;">
-                        <i class="fas fa-user-circle"></i> My Space
-                    </a>
-                </li>
-            @endif
 
-            <li>
-                <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </li>
-        @endguest
-    </ul>
-</nav>
+                <li class="dropdown-container" style="position: relative;">
+                    <a href="javascript:void(0)"
+                        style="border: 1px solid rgba(255,255,255,0.3); padding: 5px 15px; border-radius: 20px;">
+                        <i class="fa-solid fa-globe"></i> {{ strtoupper(app()->getLocale()) }}
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="{{ url('/en') }}">English</a>
+                        <a href="{{ url('/fr') }}">Français</a>
+                        <a href="{{ url('/ar') }}">العربية</a>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="https://jbala-react-client.vercel.app" target="_blank"
+                        style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
+                        API Client
+                    </a>
+                </li>
+
+                @guest
+                    @if (Route::has('login'))
+                        <li><a href="{{ route('login') }}" style="margin-left: 10px;">{{ __('messages.login') }}</a></li>
+                    @endif
+
+                    @if (Route::has('register'))
+                        <li>
+                            <a href="{{ route('register') }}"
+                                style="background-color: var(--accent-gold); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
+                                {{ __('messages.register') }}
+                            </a>
+                        </li>
+                    @endif
+                @else
+                    @if(Auth::user()->role === 'ADMIN')
+                        <li>
+                            <a href="{{ route('produits.index') }}"
+                                style="background-color: white; color: var(--jbala-green); padding: 8px 20px; border-radius: 20px; font-weight: bold;">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                    @endif
+
+                    <li>
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('messages.logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                @endguest
+            </ul>
+        </nav>
     </header>
 
     <section class="hero">
@@ -707,55 +748,51 @@
             <div class="slide"></div>
         </div>
         <div class="overlay"></div>
-
         <div class="hero-content">
-            <h1><span>Authentic</span> Northern Heritage</h1>
-            <p>Handcrafted Clay Pottery, Traditional Djellabas, and Organic Mountain Honey. Direct from the Rif
-                Mountains to your home.</p>
-            <a href="about.html" class="btn-hero">Discover Our Roots</a>
+            <h1><span>{{ __('messages.hero_span') }}</span> {{ __('messages.hero_h1') }}</h1>
+            <p>{{ __('messages.hero_p') }}</p>
+            <a href="{{ url('/about') }}" class="btn-hero">{{ __('messages.btn_hero') }}</a>
         </div>
     </section>
 
     <div class="marquee-wrapper">
         <div class="marquee-content">
-            <span class="marquee-item"><i class="fa-solid fa-mug-hot"></i> POTTERY</span>
-            <span class="marquee-item"><i class="fa-solid fa-user-hooded"></i> DJELLABAS</span>
-            <span class="marquee-item"><i class="fa-solid fa-jar"></i> ORGANIC HONEY</span>
-            <span class="marquee-item"><i class="fa-solid fa-droplet"></i> OLIVE OIL</span>
-            <span class="marquee-item"><i class="fa-solid fa-gem"></i> HANDMADE</span>
-            <span class="marquee-item"><i class="fa-solid fa-leaf"></i> 100% NATURAL</span>
-            <span class="marquee-item"><i class="fa-solid fa-mug-hot"></i> POTTERY</span>
-            <span class="marquee-item"><i class="fa-solid fa-user-hooded"></i> DJELLABAS</span>
-            <span class="marquee-item"><i class="fa-solid fa-jar"></i> ORGANIC HONEY</span>
-            <span class="marquee-item"><i class="fa-solid fa-droplet"></i> OLIVE OIL</span>
-            <span class="marquee-item"><i class="fa-solid fa-gem"></i> HANDMADE</span>
-            <span class="marquee-item"><i class="fa-solid fa-leaf"></i> 100% NATURAL</span>
+            <span class="marquee-item"><i class="fa-solid fa-mug-hot"></i> {{ __('messages.pottery') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-user-hooded"></i> {{ __('messages.djellabas') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-jar"></i> {{ __('messages.organic_honey') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-droplet"></i> {{ __('messages.olive_oil') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-gem"></i> {{ __('messages.handmade') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-leaf"></i> {{ __('messages.natural') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-mug-hot"></i> {{ __('messages.pottery') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-user-hooded"></i> {{ __('messages.djellabas') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-jar"></i> {{ __('messages.organic_honey') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-droplet"></i> {{ __('messages.olive_oil') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-gem"></i> {{ __('messages.handmade') }}</span>
+            <span class="marquee-item"><i class="fa-solid fa-leaf"></i> {{ __('messages.natural') }}</span>
         </div>
     </div>
 
     <section id="products" class="section">
         <div class="section-header">
-            <h2>Our Collection</h2>
+            <h2>{{ __('messages.our_collection') }}</h2>
             <div class="divider"></div>
-            <p style="margin-top: 20px;">Curated items that bring the essence of the Rif into your life.</p>
+            <p style="margin-top: 20px;">{{ __('messages.collection_p') }}</p>
         </div>
 
         <div class="cards-container">
-
             @foreach($products as $product)
                 <div class="product-card">
                     <div class="product-image-box">
                         <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
                     </div>
                     <div class="product-details">
-                        <a href="{{ route('shop.filter', $product->category) }}" class="category-tag">
-                            {{ $product->category }}
-                        </a>
-
+                        <a href="{{ route('shop.filter', ['lang' => app()->getLocale(), 'cat' => $product->category]) }}"
+                            class="category-tag">{{ $product->category }}</a>
                         <h3 class="product-title">{{ $product->name }}</h3>
                         <span class="product-price">{{ $product->price }} MAD</span>
-                        <a href="{{ route('add.to.cart', $product->id) }}" class="btn-add-cart">
-                            <i class="fa fa-shopping-cart"></i> Add to Cart
+                        <a href="{{ route('add.to.cart', ['lang' => app()->getLocale(), 'id' => $product->id]) }} "
+                            class="btn-add-cart">
+                            <i class="fa fa-shopping-cart"></i> {{ __('messages.add_to_cart') }}
                         </a>
                     </div>
                 </div>
@@ -766,36 +803,32 @@
     <section class="featured-section">
         <div class="featured-img"></div>
         <div class="featured-content">
-            <span class="tag">Editor's Pick</span>
-            <h2>The Royal <br> Rif Djellaba</h2>
-            <p>Experience the warmth and dignity of the traditional Northern wool Djellaba. Woven by hand in
-                Chefchaouen, this garment is perfect for winter nights and cultural gatherings.</p>
-            <a href="#" class="btn-dark">Shop This Look</a>
+            <span class="tag">{{ __('messages.tag') }}</span>
+            <h2>{{ __('messages.featured_h2') }}</h2>
+            <p>{{ __('messages.featured_p') }}</p>
+            <a href="#" class="btn-dark">{{ __('messages.btn_dark') }}</a>
         </div>
     </section>
 
     <section class="testimonials">
         <div class="section-header">
-            <h2>Community Stories</h2>
+            <h2>{{ __('messages.community_stories') }}</h2>
             <div class="divider"></div>
         </div>
         <div class="review-grid">
             <div class="review-card">
                 <i class="fa-solid fa-quote-left"></i>
-                <p class="review-text">"I ordered the Tagine set and it arrived safely in Paris. The quality is
-                    unmatched, truly a piece of art."</p>
+                <p class="review-text">{{ __('messages.review_1') }}</p>
                 <p class="review-author">- Sarah M.</p>
             </div>
             <div class="review-card">
                 <i class="fa-solid fa-quote-left"></i>
-                <p class="review-text">"The honey tastes exactly like what I remember from my childhood in the
-                    mountains. Highly recommended!"</p>
+                <p class="review-text">{{ __('messages.review_2') }}</p>
                 <p class="review-author">- Ahmed K.</p>
             </div>
             <div class="review-card">
                 <i class="fa-solid fa-quote-left"></i>
-                <p class="review-text">"Professional service and the Djellaba fits perfectly. Jbala Peak is the real
-                    deal."</p>
+                <p class="review-text">{{ __('messages.review_3') }}</p>
                 <p class="review-author">- John D.</p>
             </div>
         </div>
@@ -803,17 +836,17 @@
 
     <section class="newsletter">
         <div class="newsletter-content">
-            <h2>Join The Tribe</h2>
-            <p>Subscribe to get exclusive offers, new arrivals, and stories from the artisans.</p>
+            <h2>{{ __('messages.join_tribe') }}</h2>
+            <p>{{ __('messages.subscribe_p') }}</p>
             <form class="newsletter-form">
-                <input type="email" placeholder="Enter your email...">
-                <button type="button" class="btn-gold">Join</button>
+                <input type="email" placeholder="{{ __('messages.email_placeholder') }}">
+                <button type="button" class="btn-gold">{{ __('messages.btn_gold') }}</button>
             </form>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Jbala Peak. All Rights Reserved. Crafted by SoulaymanDev.</p>
+        <p>&copy; 2026 Jbala Peak. {{ __('messages.footer_rights') }}</p>
     </footer>
 
     <script>
