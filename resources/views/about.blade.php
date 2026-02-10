@@ -94,7 +94,7 @@
         /* PAGE BANNER */
         .page-header {
             height: 60vh;
-            background-image: url('art.jfif');
+            background-image: url('{{ asset("art.jfif") }}');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -183,15 +183,15 @@
 
     <header id="navbar">
         <div class="brand">
-            <a href="{{ url('/') }}">.<img src="logo.png" alt="Jbala Peak"></a>
+            <a href="{{ url(path: '/') }}"><img src="{{ asset('logo.png') }}" alt="Jbala Peak"></a>
+
         </div>
         <nav>
             <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/about') }}">Our Story</a></li>
-                <li><a href="{{ url('/products') }}">Collection</a></li>
-                <li><a href="{{ url('/contact') }}">Contact</a></li>
-
+                <li><a href="{{ route('welcome') }}">{{ __('messages.home') }}</a></li>
+                <li><a href="{{ route('about') }}">{{ __('messages.our_story') }}</a></li>
+                <li><a href="{{ route('shop.index') }}">{{ __('messages.collection') }}</a></li>
+                <li><a href="{{ route('email.form') }}">{{ __('messages.contact') }}</a></li>
                 <li>
                     <a href="https://jbala-react-client.vercel.app" target="_blank"
                         style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">

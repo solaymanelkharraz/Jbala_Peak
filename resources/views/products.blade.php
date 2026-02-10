@@ -262,73 +262,74 @@
         <div class="brand">
             <a href="{{ url('/') }}"><img src="{{ asset('logo.png') }}" alt="Jbala Peak"></a>
         </div>
-<nav>
-    <ul>
-        <li><a href="{{ url('/') }}">Home</a></li>
-        <li><a href="{{ url('/about') }}">Our Story</a></li>
-        <li><a href="{{ url('/products') }}">Collection</a></li>
-        <li><a href="{{ url('/contact') }}">Contact</a></li>
+        <nav>
+            <ul>
+                <li><a href="{{ route('welcome') }}">{{ __('messages.home') }}</a></li>
+                <li><a href="{{ route('about') }}">{{ __('messages.our_story') }}</a></li>
+                <li><a href="{{ route('shop.index') }}">{{ __('messages.collection') }}</a></li>
+                <li><a href="{{ route('email.form') }}">{{ __('messages.contact') }}</a></li>
 
-        <li>
-            <a href="{{ route('cart') }}" style="position: relative;">
-                <i class="fa-solid fa-cart-shopping"></i> Panier
-                @if(session('cart') && count(session('cart')) > 0)
-                    <span style="background: var(--accent-gold); color: white; border-radius: 50%; padding: 2px 7px; font-size: 10px; position: absolute; top: -10px; right: -15px;">
-                        {{ count(session('cart')) }}
-                    </span>
-                @endif
-            </a>
-        </li>
-
-        <li>
-            <a href="https://jbala-react-client.vercel.app" target="_blank"
-                style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
-                API Client
-            </a>
-        </li>
-
-        @guest
-            @if (Route::has('login'))
-                <li><a href="{{ route('login') }}" style="margin-left: 10px;">Login</a></li>
-            @endif
-
-            @if (Route::has('register'))
                 <li>
-                    <a href="{{ route('register') }}"
-                        style="background-color: var(--accent-gold); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
-                        Register
+                    <a href="{{ route('cart') }}" style="position: relative;">
+                        <i class="fa-solid fa-cart-shopping"></i> Panier
+                        @if(session('cart') && count(session('cart')) > 0)
+                            <span
+                                style="background: var(--accent-gold); color: white; border-radius: 50%; padding: 2px 7px; font-size: 10px; position: absolute; top: -10px; right: -15px;">
+                                {{ count(session('cart')) }}
+                            </span>
+                        @endif
                     </a>
                 </li>
-            @endif
-        @else
-            @if(Auth::user()->role === 'ADMIN')
-                <li>
-                    <a href="{{ route('produits.index') }}"
-                        style="background-color: white; color: var(--jbala-green); padding: 8px 20px; border-radius: 20px; font-weight: bold;">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </a>
-                </li>
-            @else
-                <li>
-                    <a href="{{ route('home') }}"
-                        style="border: 1px solid #fff; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold;">
-                        <i class="fas fa-user-circle"></i> My Space
-                    </a>
-                </li>
-            @endif
 
-            <li>
-                <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </li>
-        @endguest
-    </ul>
-</nav>
+                <li>
+                    <a href="https://jbala-react-client.vercel.app" target="_blank"
+                        style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 15px; border-radius: 20px;">
+                        API Client
+                    </a>
+                </li>
+
+                @guest
+                    @if (Route::has('login'))
+                        <li><a href="{{ route('login') }}" style="margin-left: 10px;">Login</a></li>
+                    @endif
+
+                    @if (Route::has('register'))
+                        <li>
+                            <a href="{{ route('register') }}"
+                                style="background-color: var(--accent-gold); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
+                                Register
+                            </a>
+                        </li>
+                    @endif
+                @else
+                    @if(Auth::user()->role === 'ADMIN')
+                        <li>
+                            <a href="{{ route('produits.index') }}"
+                                style="background-color: white; color: var(--jbala-green); padding: 8px 20px; border-radius: 20px; font-weight: bold;">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{ route('home') }}"
+                                style="border: 1px solid #fff; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold;">
+                                <i class="fas fa-user-circle"></i> My Space
+                            </a>
+                        </li>
+                    @endif
+
+                    <li>
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                @endguest
+            </ul>
+        </nav>
     </header>
 
     <section id="products" class="section">
