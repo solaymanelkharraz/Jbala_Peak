@@ -7,7 +7,6 @@ use App\Models\Product;
 
 class CartController extends Controller
 {
-    // 1. Show the Cart Page [cite: 363-367]
     // 1. Show the Cart Page
     public function cart($lang = 'en') // Add $lang
     {
